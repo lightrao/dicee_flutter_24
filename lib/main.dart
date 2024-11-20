@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,8 +17,23 @@ void main() {
   );
 }
 
-class DicePage extends StatelessWidget {
-  var leftDiceNumber = 1;
+class DicePage extends StatefulWidget {
+  const DicePage({super.key});
+
+  @override
+  State<DicePage> createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 1;
+
+  void changeNumber() {
+    setState(() {
+      leftDiceNumber = Random().nextInt(6) + 1;
+      rightDiceNumber = Random().nextInt(6) + 1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +44,17 @@ class DicePage extends StatelessWidget {
             child: TextButton(
               child: Image.asset('images/dice$leftDiceNumber.png'),
               onPressed: () {
-                print('Left button got pressed.');
+                changeNumber();
               },
             ),
           ),
           Expanded(
             child: TextButton(
               onPressed: () {
-                print('Right button got pressed');
+                changeNumber();
               },
               child: Image(
-                image: AssetImage('images/dice2.png'),
+                image: AssetImage('images/dice$rightDiceNumber.png'),
               ),
             ),
           ),
